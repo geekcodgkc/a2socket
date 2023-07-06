@@ -4,3 +4,4 @@ dist
 queue
 queue/*
 data.json
+/queue
