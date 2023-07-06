@@ -6,3 +6,4 @@ queue/*
 data.json
 /queue
 queue/
+queue/queue
