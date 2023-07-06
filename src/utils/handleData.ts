@@ -3,6 +3,7 @@ import {
 	deleteService,
 	updateService,
 } from "../services/syncDataToCloud.Services";
+import { storage } from "../app";
 
 interface syncData {
 	method: string;
@@ -10,18 +11,57 @@ interface syncData {
 	route: string;
 }
 
-const handleData = (data: syncData[]) => {
-	data.forEach(async (entry) => {
+const handleCreate = async (route: string, data: object) => {
+	try {
+		await createService(route, data);
+	} catch (error) {
+		const queue = storage.getItem("queue");
+		if (queue) {
+			const currentQueue = JSON.parse(queue);
+			currentQueue.cloudQueue.push({ route, data });
+			storage.setItem("queue", JSON.stringify(currentQueue));
+		}
+	}
+};
+
+const handleUpdate = async (route: string, data: object) => {
+	try {
+		await updateService(route, data);
+	} catch (error) {
+		const queue = storage.getItem("queue");
+		if (queue) {
+			const currentQueue = JSON.parse(queue);
+			currentQueue.cloudQueue.push({ route, data });
+			storage.setItem("queue", JSON.stringify(currentQueue));
+		}
+	}
+};
+
+const handleDelete = async (route: string, data: object) => {
+	try {
+		await deleteService(route, data);
+	} catch (error) {
+		const queue = storage.getItem("queue");
+		if (queue) {
+			const currentQueue = JSON.parse(queue);
+			currentQueue.cloudQueue.push({ route, data });
+			storage.setItem("queue", JSON.stringify(currentQueue));
+		}
+	}
+};
+
+const runMethods = async (petitions: syncData[]) => {
+	petitions.forEach(async (entry) => {
 		try {
 			switch (entry.method) {
 				case "POST":
-					await createService(entry.route, entry.data);
+					await handleCreate(entry.route, entry.data);
 					break;
 				case "PUT":
-					await updateService(entry.route, entry.data);
+					await handleUpdate(entry.route, entry.data);
 					break;
 				case "DELETE":
-					await deleteService(entry.route, entry.data);
+					await handleDelete(entry.route, entry.data);
 					break;
 				default:
 					break;
@@ -30,6 +70,20 @@ const handleData = (data: syncData[]) => {
 			console.log(error);
 		}
 	});
+};
+
+const handleData = (data?: syncData[]) => {
+	const queue = storage.getItem("queue");
+
+	if (queue) {
+		const currentQueue = JSON.parse(queue);
+		const entries = currentQueue.cloudQueue;
+		if (entries.lenght > 0) runMethods(entries);
+	}
+
+	if (data) {
+		runMethods(data);
+	}
 };
 
 export default handleData;

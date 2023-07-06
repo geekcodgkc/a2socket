@@ -16,9 +16,14 @@ import handleData from "./utils/handleData";
 const socketPort = SOCKET_PORT ? parseInt(SOCKET_PORT) : 8000;
 const storage = new nodeStorage.LocalStorage("./queue");
 
+const localStorageInitialState = {
+	cloudQueue: [],
+	queue: [],
+};
+
 storage.getItem("queue")
 	? console.log(storage.getItem("queue"))
-	: storage.setItem("queue", JSON.stringify({ queue: [] }));
+	: storage.setItem("queue", JSON.stringify(localStorageInitialState));
 
 const state = {
 	connection: false,

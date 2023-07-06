@@ -36,11 +36,10 @@ const deleteData = (data: unknown, state: boolean) => {
 const sendSyncDataService = () => {
 	const queue = storage.getItem("queue");
 	if (queue) {
-		const { queue: currentQueue } = JSON.parse(queue);
+		const { queue: currentQueue, cloudQueue } = JSON.parse(queue);
 		const len = currentQueue.length;
 		for (let i = 0; i < len; i++) {
 			const data = currentQueue.pop();
-			console.log(data);
 			switch (data.method) {
 				case "POST":
 					io.emit("POST", data);
@@ -57,7 +56,7 @@ const sendSyncDataService = () => {
 					break;
 			}
 		}
-		storage.setItem("queue", JSON.stringify({ queue: [] }));
+		storage.setItem("queue", JSON.stringify({ queue: [], cloudQueue }));
 	}
 };
 
