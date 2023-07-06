@@ -74,6 +74,7 @@ const runMethods = async (petitions: syncData[]) => {
 
 const handleData = (data?: syncData[]) => {
 	const queue = storage.getItem("queue");
+	console.log(data)
 
 	if (queue) {
 		const currentQueue = JSON.parse(queue);
