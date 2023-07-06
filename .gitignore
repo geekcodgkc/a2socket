@@ -5,3 +5,4 @@ queue
 queue/*
 data.json
 /queue
+queue/
