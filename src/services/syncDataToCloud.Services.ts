@@ -1,35 +1,32 @@
 import api from "../api";
 
-const createService = async (route, body) => {
+const createService = async (route: string, body: object) => {
 	try {
 		const { data } = await api.post(`/${route}`, body);
-		console.log(data);
+		console.log(data.data);
 		return true;
 	} catch (error) {
-		console.log(error);
-		return false;
+		return error;
 	}
 };
 
-const updateService = async (route, body) => {
+const updateService = async (route: string, body: object) => {
 	try {
 		const { data } = await api.put(`/${route}`, body);
-		console.log(data);
+		console.log(data.data);
 		return true;
 	} catch (error) {
-		console.log(error);
-		return false;
+		return error;
 	}
 };
 
-const deleteService = async (route, body) => {
+const deleteService = async (route: string, body: object) => {
 	try {
 		const { data } = await api.delete(`/${route}`, body);
-		console.log(data);
+		console.log(data.data);
 		return true;
 	} catch (error) {
-		console.log(error);
-		return false;
+		return error;
 	}
 };
 
