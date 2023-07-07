@@ -57,15 +57,6 @@ io.on("connection", (socket: Socket) => {
 		console.log('dis')
 	});
 
-	socket.emit('POST', {route:'order', data: {
-		id: 12,
-		products: {id:99, name: 'nombre del producto'}
-	}})
-	socket.emit('POST', {route:'client', data: {
-		name: 'cliente',
-		zone: {id: 33}
-	}})
-
 	socket.on('OK', (e) => console.log(e))
 });
 
