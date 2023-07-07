@@ -45,11 +45,11 @@ const sendSyncDataService = () => {
 					io.emit("POST", data);
 					break;
 				case "PUT":
-					io.emit("POST", data);
+					io.emit("PUT", data);
 					break;
 
 				case "DELETE":
-					io.emit("POST", data);
+					io.emit("DELETE", data);
 					break;
 
 				default:

@@ -38,18 +38,36 @@ const io = new Server(socketPort, {
 });
 
 io.on("connection", (socket: Socket) => {
-	console.log(socket.handshake.auth);
+	console.log(socket.handshake);
+	if(!socket.handshake.auth.token) socket.disconnect()
 	state.connection = true;
+
+	socket.emit('hello', 'hello')
+
+	// data para api local
 	socket.on("sync", () => {
 		sendSyncDataService();
 	});
+	// data para api cloud
 	socket.on("syncCloud", (data) => {
 		handleData(data);
 	});
 	socket.on("disconnect", () => {
 		state.connection = false;
+		console.log('dis')
 	});
+
+	socket.on('OK', (e) => console.log(e))
 });
+
+io.emit('POST', {route:'order', data: {
+	id: 12,
+	products: {id:99, name: 'nombre del producto'}
+}})
+io.emit('POST', {route:'client', data: {
+	name: 'cliente',
+	zone: {id: 33}
+}})
 
 const port = PORT || 3003;
 
@@ -60,6 +78,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post("/data", validateMiddleware, async (req: Request, res: Response) => {
 	const data = req.body;
+	console.log(req.body)
 	// socket send data function
 	data.method = req.method;
 	createData(data, state.connection);
@@ -72,6 +91,7 @@ app.put(
 	async (req: Request, res: Response) => {
 		const data = req.body;
 		const id = req.params.id;
+		console.log(req.body)
 		data.id = id;
 		data.method = req.method;
 		// socket send data function
