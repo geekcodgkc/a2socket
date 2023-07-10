@@ -35,7 +35,6 @@ const io = new Server(socketPort, {
 		origin: "*",
 		credentials: true,
 	},
-	path: "/socket/",
 });
 
 io.on("connection", (socket: Socket) => {
