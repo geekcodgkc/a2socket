@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 const PORT = process.env.PORT;
-const ACCESS = process.env.ACCESTOKEN;
+const TOKEN = process.env.TOKEN;
 const SOCKET_PORT = process.env.SOCKET_PORT;
 
-export { PORT, ACCESS, SOCKET_PORT };
+export { PORT, TOKEN, SOCKET_PORT };

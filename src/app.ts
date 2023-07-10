@@ -3,7 +3,7 @@ import cors from "cors";
 import validateMiddleware from "./middlewares/validateMiddleware";
 import nodeStorage from "node-localstorage";
 import { Server } from "socket.io";
-import { SOCKET_PORT, PORT, ACCESS } from "./config";
+import { SOCKET_PORT, PORT } from "./config";
 import {
 	createData,
 	updateData,
@@ -12,6 +12,7 @@ import {
 } from "./services/sendData.Services";
 import { Socket } from "socket.io";
 import handleData from "./utils/handleData";
+import validate from "./utils/validateToken";
 
 const socketPort = SOCKET_PORT ? parseInt(SOCKET_PORT) : 8000;
 const storage = new nodeStorage.LocalStorage("./queue");
@@ -39,7 +40,8 @@ const io = new Server(socketPort, {
 
 io.on("connection", (socket: Socket) => {
 	console.log(socket.handshake);
-	if (!socket.handshake.auth.token) socket.disconnect();
+	validate(socket);
+
 	state.connection = true;
 
 	socket.emit("hello", "hello");
