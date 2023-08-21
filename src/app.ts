@@ -9,7 +9,7 @@ import { router } from "./routes";
 import dbConnect from "./config/Mongo";
 import socketHandler from "./socket";
 
-const socketPort = SOCKET_PORT ? parseInt(SOCKET_PORT) : 8000;
+const socketPort = SOCKET_PORT ? parseInt(SOCKET_PORT) : 8002;
 
 //socket io config
 const io = new Server(socketPort, {
