@@ -4,3 +4,5 @@ import { DB_URI } from "./index";
 const dbConnect = async (): Promise<void> => {
 	await connect(`${DB_URI}`);
 };
+
+export default dbConnect;

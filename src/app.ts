@@ -5,8 +5,9 @@ import validateMiddleware from "./middlewares/validateMiddleware";
 import { Server } from "socket.io";
 import { SOCKET_PORT, PORT } from "./config";
 import { Socket } from "socket.io";
-import validate from "./utils/validateToken";
 import { router } from "./routes";
+import dbConnect from "./config/Mongo";
+import socketHandler from "./socket";
 
 const socketPort = SOCKET_PORT ? parseInt(SOCKET_PORT) : 8000;
 
@@ -19,19 +20,7 @@ const io = new Server(socketPort, {
 });
 
 io.on("connection", (socket: Socket) => {
-	validate(socket);
-	socket.join(socket.handshake.auth.joinID);
-
-	socket.on("update", ({ data, room }) => {
-		console.log(socket.rooms);
-		socket.in(room).emit("updateData", data);
-	});
-
-	socket.on("disconnect", () => {
-		console.log("dis");
-	});
-
-	socket.on("OK", (e) => console.log(e));
+	socketHandler(socket);
 });
 
 const port = PORT || 3003;
@@ -42,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
 app.use(router);
+dbConnect();
 
 app.listen(port, () => {
 	console.log(`escuchando en el puerto ${port}`);
