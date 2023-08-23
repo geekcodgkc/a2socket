@@ -12,6 +12,10 @@ const socketHandler = (socket: Socket) => {
 		socket.in(room).emit("updateData", data);
 	});
 
+	socket.on('givesales', (e) => {
+		console.log(socket.handshake, socket.rooms, e)
+	})
+
 	socket.on("disconnect", () => {
 		console.log("dis");
 	});
