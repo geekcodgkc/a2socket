@@ -8,4 +8,8 @@ const sendMessage = async (
 	io.to(roomId).emit("updateData", message);
 };
 
-export { sendMessage };
+const salesSevice = async (roomId:string) => {
+	io.to(roomId).emit('syncSales')
+}
+
+export { sendMessage, salesSevice };

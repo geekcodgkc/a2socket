@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { sendMessage } from "../services/Message.Services";
+import { sendMessage, salesSevice } from "../services/Message.Services";
 
 const createMessage = async (req: Request, res: Response) => {
 	console.log(req.body);
@@ -11,4 +11,13 @@ const createMessage = async (req: Request, res: Response) => {
 	res.json({ message: "updated" });
 };
 
-export { createMessage };
+const askForSales = async (req: Request, res: Response) => {
+	try {
+		await salesSevice(`${req.headers.roomid}`);
+	} catch (error) {
+		res.json({ error });
+	}
+	res.json({ message: "updated" });
+};
+
+export { createMessage, askForSales };
