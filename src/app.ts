@@ -28,7 +28,7 @@ const port = PORT || 3003;
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 app.use(morgan("tiny"));
 app.use(router);
 dbConnect();
