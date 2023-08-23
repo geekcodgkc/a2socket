@@ -5,7 +5,7 @@ import { SOCKET_PORT } from "../config";
 const socketHandler = (socket: Socket) => {
 	console.log("socket running on port ", SOCKET_PORT);
 	validate(socket);
-	socket.join(socket.handshake.auth.joinID);
+	socket.join(socket.handshake.auth.roomID);
 
 	socket.on("update", ({ data, room }) => {
 		console.log(socket.rooms);
