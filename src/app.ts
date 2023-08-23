@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import validateMiddleware from "./middlewares/validateMiddleware";
 import { Server } from "socket.io";
 import { SOCKET_PORT, PORT } from "./config";
 import { Socket } from "socket.io";
@@ -28,7 +27,7 @@ const port = PORT || 3003;
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true, limit: '20mb' }));
+app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 app.use(morgan("tiny"));
 app.use(router);
 dbConnect();
