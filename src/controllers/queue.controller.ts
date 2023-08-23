@@ -17,7 +17,7 @@ const askForSales = async (req: Request, res: Response) => {
 	} catch (error) {
 		res.json({ error });
 	}
-	res.json({ message: "updated" });
+	res.json({ message: "ask for update sended" });
 };
 
 export { createMessage, askForSales };
