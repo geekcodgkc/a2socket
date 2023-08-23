@@ -12,4 +12,9 @@ const salesSevice = async (roomId:string) => {
 	io.to(roomId).emit('syncSales')
 }
 
-export { sendMessage, salesSevice };
+const sendSalesServices = async (roomId:string, 
+	message: string | object | Array<string | object>) => {
+	io.to(roomId).emit('giveSales', message)
+}
+
+export { sendMessage, salesSevice, sendSalesServices };
