@@ -4,9 +4,6 @@ import { ValidateClient } from "../services/Client.Services";
 
 const socketHandler = (socket: Socket) => {
 	validate(socket);
-
-	console.log(socket.handshake)
-
 	ValidateClient({
 		roomdId: socket.handshake.auth.roomID,
 		readId: socket.handshake.auth.readID,
