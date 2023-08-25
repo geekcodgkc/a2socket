@@ -19,7 +19,10 @@ const createMessage = async (req: Request, res: Response) => {
 const askForSales = async (req: Request, res: Response) => {
 	console.log(req.params, req.query);
 	try {
-		await salesSevice(`${req.headers.roomid}`);
+		await salesSevice({
+			roomId: `${req.headers.roomid}`,
+			cierre: req.query.cierre ? true : false,
+		});
 	} catch (error) {
 		res.json({ error });
 	}
