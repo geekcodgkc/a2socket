@@ -8,8 +8,18 @@ import MessageModel from "../models/Message.Model";
 const sendMessage = async (
 	roomId: string,
 	message: string | object | Array<string | object>,
+	readId: string
 ) => {
-	io.to(roomId).emit("updateData", message);
+	try {
+		const newMessage = await MessageModel.create({
+			message,
+			roomId,
+			reads: [readId]
+		})
+		io.to(roomId).emit("updateData", newMessage.toJSON());
+	} catch (error) {
+		console.log(error)
+	}
 };
 
 /*
