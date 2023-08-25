@@ -9,7 +9,7 @@ import MessageModel from "../models/Message.Model";
 const createMessage = async (req: Request, res: Response) => {
 	try {
 		console.log("message queued");
-		await sendMessage(`${req.headers.roomid}`, req.body);
+		await sendMessage(`${req.headers.roomid}`, req.body, `${req.headers.roomid}`);
 	} catch (error) {
 		res.json({ error });
 	}
