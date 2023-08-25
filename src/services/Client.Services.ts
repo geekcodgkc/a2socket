@@ -79,6 +79,7 @@ const ValidateClient = async ({ roomdId, readId }: validationData) => {
 				reads.push(branch._id.toString());
 			});
 			const isValid = reads.filter((branch) => branch === readId);
+			console.log({ readId, roomdId }, reads, isValid);
 			return isValid.length > 0;
 		}
 		throw new Error("roomId and readId required");

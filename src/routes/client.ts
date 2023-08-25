@@ -6,13 +6,14 @@ import {
 	getClient,
 	getClients,
 } from "../controllers/client.controller";
+import validateMiddleware from "../middlewares/validateMiddleware";
 
 const router = Router();
 
-router.post("/", createClient);
-router.get("/", getClients);
-router.get("/:id", getClient);
-router.delete("/:id", deleteClient);
-router.put("/:id", updateClient);
+router.post("/", validateMiddleware, createClient);
+router.get("/", validateMiddleware, getClients);
+router.get("/:id", validateMiddleware, getClient);
+router.delete("/:id", validateMiddleware, deleteClient);
+router.put("/:id", validateMiddleware, updateClient);
 
 export { router };
