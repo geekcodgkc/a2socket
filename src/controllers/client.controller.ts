@@ -5,7 +5,6 @@ import {
 	UpdateClient,
 	DeleteClient,
 	CreateCLient,
-	ValidateClient,
 } from "../services/Client.Services";
 
 const createClient = async (req: Request, res: Response) => {

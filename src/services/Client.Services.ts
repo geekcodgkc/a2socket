@@ -1,5 +1,4 @@
 import ClientModel from "../models/Clients.Model";
-import { ClientInterface } from "../interfaces/Clients.interface";
 import { Request } from "express";
 
 const CreateCLient = async (req: Request) => {
@@ -79,7 +78,6 @@ const ValidateClient = async ({ roomdId, readId }: validationData) => {
 				reads.push(branch._id.toString());
 			});
 			const isValid = reads.filter((branch) => branch === readId);
-			console.log({ readId, roomdId }, reads, isValid);
 			return isValid.length > 0;
 		}
 		throw new Error("roomId and readId required");

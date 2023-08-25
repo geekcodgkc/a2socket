@@ -5,21 +5,8 @@ import {
 	sendSalesServices,
 } from "../services/Message.Services";
 import MessageModel from "../models/Message.Model";
-import { ValidateClient } from "../services/Client.Services";
 
 const createMessage = async (req: Request, res: Response) => {
-	const { roomid, readid } = req.headers;
-	if (typeof roomid === "string" && typeof readid === "string") {
-		const isValid = await ValidateClient({
-			roomdId: roomid,
-			readId: readid,
-		});
-
-		if (!isValid) {
-			res.json({ error: "not-valid" });
-			return;
-		}
-	}
 	try {
 		console.log("message queued");
 		await sendMessage(`${req.headers.roomid}`, req.body);
@@ -30,18 +17,7 @@ const createMessage = async (req: Request, res: Response) => {
 };
 
 const askForSales = async (req: Request, res: Response) => {
-	const { roomid, readid } = req.headers;
-	if (typeof roomid === "string" && typeof readid === "string") {
-		const isValid = await ValidateClient({
-			roomdId: roomid,
-			readId: readid,
-		});
-
-		if (!isValid) {
-			res.json({ error: "not-valid" });
-			return;
-		}
-	}
+	console.log(req.params, req.query);
 	try {
 		await salesSevice(`${req.headers.roomid}`);
 	} catch (error) {
@@ -51,18 +27,6 @@ const askForSales = async (req: Request, res: Response) => {
 };
 
 const sendSales = async (req: Request, res: Response) => {
-	const { roomid, readid } = req.headers;
-	if (typeof roomid === "string" && typeof readid === "string") {
-		const isValid = await ValidateClient({
-			roomdId: roomid,
-			readId: readid,
-		});
-
-		if (!isValid) {
-			res.json({ error: "not-valid" });
-			return;
-		}
-	}
 	try {
 		await sendSalesServices(`${req.headers.roomid}`, req.body);
 	} catch (error) {
