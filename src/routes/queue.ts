@@ -5,11 +5,17 @@ import {
 	sendSales,
 } from "../controllers/queue.controller";
 import validateMiddleware from "../middlewares/validateMiddleware";
+import validateClientsMiddleware from "../middlewares/validateClientsMiddleware";
 
 const router = Router();
 
-router.post("/", validateMiddleware, createMessage);
-router.get("/sales", validateMiddleware, askForSales);
-router.post("/sales", validateMiddleware, sendSales);
+router.post("/", validateMiddleware, validateClientsMiddleware, createMessage);
+router.get(
+	"/sales",
+	validateMiddleware,
+	validateClientsMiddleware,
+	askForSales,
+);
+router.post("/sales", validateMiddleware, validateClientsMiddleware, sendSales);
 
 export { router };
