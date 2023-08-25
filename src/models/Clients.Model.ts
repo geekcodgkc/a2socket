@@ -12,45 +12,50 @@ const BranchSchema = new Schema<Branch>({
 	},
 });
 
-const ClientSchema = new Schema<ClientInterface>({
-	branchs: [BranchSchema],
-	rif: {
-		type: String,
-		required: true,
-		unique: true,
+const ClientSchema = new Schema<ClientInterface>(
+	{
+		branchs: [BranchSchema],
+		rif: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		name: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		phone: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		address: {
+			type: String,
+			required: true,
+		},
+		billingDate: {
+			type: Date,
+			required: true,
+		},
+		mainBranch: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		mainBranchLocation: {
+			type: String,
+			required: true,
+		},
+		verified: {
+			type: Boolean,
+			default: false,
+		},
 	},
-	name: {
-		type: String,
-		required: true,
-		unique: true,
+	{
+		timestamps: true,
 	},
-	phone: {
-		type: String,
-		required: true,
-		unique: true,
-	},
-	address: {
-		type: String,
-		required: true,
-	},
-	billingDate: {
-		type: Date,
-		required: true,
-	},
-	mainBranch: {
-		type: String,
-		required: true,
-		unique: true,
-	},
-	mainBranchLocation: {
-		type: String,
-		required: true,
-	},
-	verified: {
-		type: Boolean,
-		default: false,
-	},
-});
+);
 
 const ClientModel = model("Clients", ClientSchema);
 export default ClientModel;

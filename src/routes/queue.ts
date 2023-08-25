@@ -10,12 +10,14 @@ import validateClientsMiddleware from "../middlewares/validateClientsMiddleware"
 const router = Router();
 
 router.post("/", validateMiddleware, validateClientsMiddleware, createMessage);
+
 router.get(
 	"/sales",
 	validateMiddleware,
 	validateClientsMiddleware,
 	askForSales,
 );
+
 router.post("/sales", validateMiddleware, validateClientsMiddleware, sendSales);
 
 export { router };
