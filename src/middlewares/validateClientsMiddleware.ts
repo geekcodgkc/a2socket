@@ -8,11 +8,11 @@ const validateClientsMiddleware = async (
 ) => {
 	const { roomid, readid } = req.headers;
 	if (typeof roomid === "string" && typeof readid === "string") {
-		const isValid = await ValidateClient({
+		const isValid: boolean = await ValidateClient({
 			roomdId: roomid,
 			readId: readid,
 		});
-
+		
 		if (!isValid) {
 			res.status(401);
 			res.json({ error: "not-valid" });

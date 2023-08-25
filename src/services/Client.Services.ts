@@ -23,18 +23,18 @@ const DeleteClient = async (req: Request) => {
 
 const UpdateClient = async (req: Request) => {
 	const data = req.body;
-	const id = req.params.id;
+	const _id = req.params.id;
 
 	try {
-		if (id) {
-			const current = await ClientModel.findOne({ id });
-			if (!current) throw new Error(`client with id: ${id} not found`);
+		if (_id) {
+			const current = await ClientModel.findOne({ _id });
+			if (!current) throw new Error(`client with id: ${_id} not found`);
 			const parsed = current.toJSON();
 			const updated = {
 				...parsed,
 				...data,
 			};
-			const client = await ClientModel.findOneAndUpdate({ id }, updated, {
+			const client = await ClientModel.findOneAndUpdate({ _id }, updated, {
 				new: true,
 			});
 			return client;
@@ -71,7 +71,10 @@ const ValidateClient = async ({ roomdId, readId }: validationData) => {
 	try {
 		if (roomdId && readId) {
 			const room = await ClientModel.findOne({ _id: roomdId });
-			if (!room) return false;
+			if (!room || !room.verified) return false;
+			console.log(new Date().getTime(), new Date(room.billingDate).getTime())
+			const validDate = new Date().getTime() <= new Date(room.billingDate).getTime();
+			if (!validDate) return false
 			const reads = [];
 			reads.push(room.mainBranch);
 			room.branchs.forEach((branch) => {
