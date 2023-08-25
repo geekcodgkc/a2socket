@@ -71,7 +71,8 @@ const ValidateClient = async ({ roomdId, readId }: validationData) => {
 	try {
 		if (roomdId && readId) {
 			const room = await ClientModel.findOne({ _id: roomdId });
-			if (!room || !room.verified) return false;
+			if (!room) return false;
+			console.log('room data: ', room)
 			console.log(new Date().getTime(), new Date(room.billingDate).getTime())
 			const validDate = new Date().getTime() <= new Date(room.billingDate).getTime();
 			if (!validDate) return false
