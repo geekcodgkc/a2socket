@@ -1,4 +1,5 @@
 import ClientModel from "../models/Clients.Model";
+import MessageModel from "../models/Message.Model";
 import { Request } from "express";
 
 const CreateCLient = async (req: Request) => {
@@ -93,6 +94,14 @@ const ValidateClient = async ({ roomdId, readId }: validationData) => {
 	}
 };
 
+const getClientMessagesService = async () => {
+	try {
+		const clients = await MessageModel.find();
+		return clients;
+	} catch (error) {
+		throw new Error(`${error}`);
+	}
+};
 export {
 	GetClient,
 	GetClients,
@@ -100,4 +109,5 @@ export {
 	DeleteClient,
 	CreateCLient,
 	ValidateClient,
+	getClientMessagesService
 };
