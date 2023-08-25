@@ -76,7 +76,7 @@ const ValidateClient = async ({ roomdId, readId }: validationData) => {
 			const reads = [];
 			reads.push(room.mainBranch);
 			room.branchs.forEach((branch) => {
-				reads.push(branch._id);
+				reads.push(branch._id.toString());
 			});
 			const isValid = reads.filter((branch) => branch === readId);
 			return isValid.length > 0;

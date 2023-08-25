@@ -17,14 +17,17 @@ const ClientSchema = new Schema<ClientInterface>({
 	rif: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	name: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	phone: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	address: {
 		type: String,
@@ -37,6 +40,7 @@ const ClientSchema = new Schema<ClientInterface>({
 	mainBranch: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	mainBranchLocation: {
 		type: String,

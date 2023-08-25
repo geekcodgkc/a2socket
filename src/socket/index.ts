@@ -1,23 +1,36 @@
 import { Socket } from "socket.io";
 import validate from "../utils/validateToken";
-import { SOCKET_PORT } from "../config";
+import { ValidateClient } from "../services/Client.Services";
 
 const socketHandler = (socket: Socket) => {
-	console.log("socket running on port ", SOCKET_PORT);
 	validate(socket);
-	socket.join(socket.handshake.auth.roomID);
+	ValidateClient({
+		roomdId: socket.handshake.auth.roomID,
+		readId: socket.handshake.auth.readID,
+	}).then((valid) => {
+		if (valid) {
+			socket.join(socket.handshake.auth.roomID);
+			return;
+		}
+		socket.disconnect();
+	});
 
 	socket.on("update", ({ data, room }) => {
-		console.log(socket.rooms);
+		ValidateClient({
+			roomdId: socket.handshake.auth.roomID,
+			readId: socket.handshake.auth.readID,
+		}).then((valid) => {
+			if (valid) {
+				socket.join(socket.handshake.auth.roomID);
+				return;
+			}
+			socket.disconnect();
+		});
 		socket.in(room).emit("updateData", data);
 	});
 
-	socket.on('givesales', (e) => {
-		console.log(socket.handshake, socket.rooms, e)
-	})
-
 	socket.on("disconnect", () => {
-		console.log("dis");
+		console.log(`dis ${socket.handshake.auth.readID}`);
 	});
 
 	socket.on("OK", (e) => console.log(e));

@@ -27,11 +27,12 @@ const port = PORT || 3003;
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true, limit: '100mb' }));
+app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use(morgan("tiny"));
 app.use(router);
 dbConnect();
 
+console.log("socket running on port ", SOCKET_PORT);
 app.listen(port, () => {
 	console.log(`escuchando en el puerto ${port}`);
 });
