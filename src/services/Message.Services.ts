@@ -56,11 +56,19 @@ const sendSalesServices = async (
 const getMessagesService = async (req: Request) => {
 	console.log(req.params, req.headers);
 	if (!req.params.all) {
-		const messages = await MessageModel.find({ roomId: req.headers.roomid });
-		return messages;
+		try {
+			const messages = await MessageModel.find({ roomId: req.headers.roomid });
+			return messages;
+		} catch (error) {
+			throw new Error(`${error}`);
+		}
 	}
-	const messages = await MessageModel.find();
-	return messages;
+	try {
+		const messages = await MessageModel.find();
+		return messages;
+	} catch (error) {
+		throw new Error(`${error}`);
+	}
 };
 
 const getClientQueue = async (roomId: string) => {
