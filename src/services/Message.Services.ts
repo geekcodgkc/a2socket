@@ -65,7 +65,7 @@ const getMessagesService = async (req: Request) => {
 
 const getClientQueue = async (roomId: string) => {
 	const queue = await MessageModel.find({ roomId });
-	io.to(roomId).emit("sync", queue);
+	io.to(roomId).emit("queue", queue);
 };
 
 export {

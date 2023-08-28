@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 import validate from "../utils/validateToken";
 import { ValidateClient } from "../services/Client.Services";
+import { getClientQueue } from "../services/Message.Services";
 
 const socketHandler = (socket: Socket) => {
 	validate(socket);
@@ -15,14 +16,8 @@ const socketHandler = (socket: Socket) => {
 		socket.disconnect();
 	});
 
-	socket.on("update", ({ data, room }) => {
-		ValidateClient({
-			roomdId: socket.handshake.auth.roomID,
-			readId: socket.handshake.auth.readID,
-		}).then((valid) => {
-			if (!valid) socket.disconnect();
-		});
-		socket.to(room).emit("updateData", data);
+	socket.on("syncQueue", () => {
+		getClientQueue(socket.handshake.auth.roomID);
 	});
 
 	socket.on("disconnect", () => {
