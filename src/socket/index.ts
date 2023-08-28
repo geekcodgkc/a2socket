@@ -8,13 +8,15 @@ const socketHandler = (socket: Socket) => {
 	ValidateClient({
 		roomdId: socket.handshake.auth.roomID,
 		readId: socket.handshake.auth.readID,
-	}).then((valid) => {
-		if (valid) {
-			socket.join(socket.handshake.auth.roomID);
-			return;
-		}
-		socket.disconnect();
-	});
+	})
+		.then((valid) => {
+			if (valid) {
+				socket.join(socket.handshake.auth.roomID);
+				return;
+			}
+			socket.disconnect();
+		})
+		.catch((e) => console.log(e));
 
 	socket.on("syncQueue", () => {
 		getClientQueue(socket.handshake.auth.roomID);
