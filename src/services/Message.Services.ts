@@ -76,10 +76,51 @@ const getClientQueue = async (roomId: string) => {
 	io.to(roomId).emit("queue", queue);
 };
 
+const addReadMessage = async (
+	roomId: string,
+	messageId: string,
+	readerId: string,
+) => {
+	try {
+		const message = await MessageModel.findById(messageId);
+		const room = await ClientModel.findById(roomId);
+
+		room?.toJSON();
+		const allReaders = new Set();
+		room && allReaders.add(room._id);
+		room?.branchs.forEach((b) => allReaders.add(b._id));
+
+		const currentReads = new Set();
+		message?.reads.forEach((r) => {
+			currentReads.add(r);
+		});
+		currentReads.add(readerId);
+
+		if (currentReads.size === allReaders.size) {
+			await MessageModel.findByIdAndDelete(messageId);
+			return;
+		}
+
+		const reads = [];
+		for (const reader of currentReads.values()) {
+			reads.push(reader);
+		}
+
+		const updatedMessage = {
+			reads,
+		};
+
+		await MessageModel.findByIdAndUpdate(messageId, updatedMessage);
+	} catch (error) {
+		throw new Error(`${error}`);
+	}
+};
+
 export {
 	sendMessage,
 	salesSevice,
 	sendSalesServices,
 	getMessagesService,
 	getClientQueue,
+	addReadMessage,
 };
