@@ -20,13 +20,9 @@ const socketHandler = (socket: Socket) => {
 			roomdId: socket.handshake.auth.roomID,
 			readId: socket.handshake.auth.readID,
 		}).then((valid) => {
-			if (valid) {
-				socket.join(socket.handshake.auth.roomID);
-				return;
-			}
-			socket.disconnect();
+			if (!valid) socket.disconnect();
 		});
-		socket.in(room).emit("updateData", data);
+		socket.to(room).emit("updateData", data);
 	});
 
 	socket.on("disconnect", () => {

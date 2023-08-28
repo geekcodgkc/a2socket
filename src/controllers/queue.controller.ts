@@ -3,13 +3,17 @@ import {
 	sendMessage,
 	salesSevice,
 	sendSalesServices,
+	getMessagesService,
 } from "../services/Message.Services";
-import MessageModel from "../models/Message.Model";
 
 const createMessage = async (req: Request, res: Response) => {
 	try {
 		console.log("message queued");
-		await sendMessage(`${req.headers.roomid}`, req.body, `${req.headers.roomid}`);
+		await sendMessage(
+			`${req.headers.roomid}`,
+			req.body,
+			`${req.headers.roomid}`,
+		);
 	} catch (error) {
 		res.json({ error });
 	}
@@ -38,4 +42,13 @@ const sendSales = async (req: Request, res: Response) => {
 	res.json({ message: "ask for update sended" });
 };
 
-export { createMessage, askForSales, sendSales };
+const getMessages = async (req: Request, res: Response) => {
+	try {
+		const messages = await getMessagesService(req);
+		res.json({ messages });
+	} catch (error) {
+		res.json({ error });
+	}
+};
+
+export { createMessage, askForSales, sendSales, getMessages };

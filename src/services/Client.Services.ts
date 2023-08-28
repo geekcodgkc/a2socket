@@ -72,20 +72,21 @@ const ValidateClient = async ({ roomdId, readId }: validationData) => {
 	try {
 		if (roomdId && readId) {
 			const room = await ClientModel.findOne({ _id: roomdId });
-			
+
 			if (!room || !room.verified) return false;
-			
-			const validDate = new Date().getTime() <= new Date(room.billingDate).getTime();
-			
-			if (!validDate) return false
-			
+
+			const validDate =
+				new Date().getTime() <= new Date(room.billingDate).getTime();
+
+			if (!validDate) return false;
+
 			const reads = [];
 			reads.push(room.mainBranch);
 			room.branchs.forEach((branch) => {
 				reads.push(branch._id.toString());
 			});
 			const isValid = reads.filter((branch) => branch === readId);
-			
+
 			return isValid.length > 0;
 		}
 		throw new Error("roomId and readId required");
@@ -109,5 +110,5 @@ export {
 	DeleteClient,
 	CreateCLient,
 	ValidateClient,
-	getClientMessagesService
+	getClientMessagesService,
 };

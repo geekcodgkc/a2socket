@@ -1,5 +1,7 @@
+import { Request } from "express";
 import { io } from "../app";
 import MessageModel from "../models/Message.Model";
+import ClientModel from "../models/Clients.Model";
 
 /*
 	envia mensajes para actualizar la cola atravez del socket
@@ -8,17 +10,17 @@ import MessageModel from "../models/Message.Model";
 const sendMessage = async (
 	roomId: string,
 	message: string | object | Array<string | object>,
-	readId: string
+	readId: string,
 ) => {
 	try {
 		const newMessage = await MessageModel.create({
 			message,
 			roomId,
-			reads: [readId]
-		})
+			reads: [readId],
+		});
 		io.to(roomId).emit("updateData", newMessage.toJSON());
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 	}
 };
 
@@ -51,4 +53,25 @@ const sendSalesServices = async (
 	io.to(roomId).emit("giveSales", message);
 };
 
-export { sendMessage, salesSevice, sendSalesServices };
+const getMessagesService = async (req: Request) => {
+	console.log(req.params, req.headers);
+	if (!req.params.all) {
+		const messages = await MessageModel.find({ roomId: req.headers.roomid });
+		return messages;
+	}
+	const messages = await MessageModel.find();
+	return messages;
+};
+
+const getClientQueue = async (roomId: string) => {
+	const queue = await MessageModel.find({ roomId });
+	io.to(roomId).emit("sync", queue);
+};
+
+export {
+	sendMessage,
+	salesSevice,
+	sendSalesServices,
+	getMessagesService,
+	getClientQueue,
+};
