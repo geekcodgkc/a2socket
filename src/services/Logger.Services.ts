@@ -38,4 +38,13 @@ const SocketLogger = async (
 	}
 };
 
-export { RouteLogger, SocketLogger };
+const getLogger = async () => {
+	try {
+		const logs = await LoggerModel.find();
+		return logs;
+	} catch (error) {
+		throw Error(`${error}`);
+	}
+};
+
+export { RouteLogger, SocketLogger, getLogger };
