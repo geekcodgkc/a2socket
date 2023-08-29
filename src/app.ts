@@ -31,7 +31,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use(
 	morgan((tokens, req, res) => {
-		RouteLogger(req.headers, req.body, req.originalUrl, req.route.methods);
+		RouteLogger(
+			req.headers,
+			req.body,
+			req.originalUrl,
+			tokens.method(req, res),
+		);
 		return [
 			tokens.method(req, res),
 			tokens.url(req, res),

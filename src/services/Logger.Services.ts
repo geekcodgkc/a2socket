@@ -4,15 +4,16 @@ const RouteLogger = async (
 	headers: object,
 	body: object,
 	url: string,
-	method: object,
+	method?: string,
 ) => {
+	console.log(method);
 	try {
 		await LoggerModel.create({
 			headers,
 			body,
 			route: url,
-			method,
-			type: "HTTPS",
+			method: { method: `${method}` },
+			type: "SOCKET",
 		});
 	} catch (error) {
 		console.log(error);
