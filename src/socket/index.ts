@@ -1,7 +1,11 @@
 import { Socket } from "socket.io";
 import validate from "../utils/validateToken";
 import { ValidateClient } from "../services/Client.Services";
-import { addReadMessage, getClientQueue } from "../services/Message.Services";
+import {
+	addReadMessage,
+	deleteMessage,
+	getClientQueue,
+} from "../services/Message.Services";
 
 const socketHandler = (socket: Socket) => {
 	validate(socket);
@@ -28,6 +32,10 @@ const socketHandler = (socket: Socket) => {
 			messageId,
 			socket.handshake.auth.readID,
 		);
+	});
+
+	socket.on("readSale", (messageId) => {
+		deleteMessage(messageId);
 	});
 
 	socket.on("disconnect", () => {

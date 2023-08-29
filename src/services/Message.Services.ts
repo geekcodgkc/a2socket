@@ -50,7 +50,16 @@ const sendSalesServices = async (
 	roomId: string,
 	message: string | object | Array<string | object>,
 ) => {
-	io.to(roomId).emit("giveSales", message);
+	try {
+		const sales = await MessageModel.create({
+			message,
+			roomId,
+			reads: [],
+		});
+		io.to(roomId).emit("giveSales", sales.toJSON());
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const getMessagesService = async (req: Request) => {
@@ -115,6 +124,14 @@ const addReadMessage = async (
 	}
 };
 
+const deleteMessage = async (id: string) => {
+	try {
+		await MessageModel.findByIdAndRemove(id);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 export {
 	sendMessage,
 	salesSevice,
@@ -122,4 +139,5 @@ export {
 	getMessagesService,
 	getClientQueue,
 	addReadMessage,
+	deleteMessage,
 };
