@@ -4,6 +4,6 @@ import { getLogs } from "../controllers/logger.controllers";
 
 const router = Router();
 
-router.get("/", validateMiddleware, getLogs);
+router.get("/all", validateMiddleware, getLogs);
 
 export { router };
