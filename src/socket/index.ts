@@ -33,8 +33,6 @@ const socketHandler = (socket: Socket) => {
 	socket.on("disconnect", () => {
 		console.log(`dis ${socket.handshake.auth.readID}`);
 	});
-
-	socket.on("OK", (e) => console.log(e));
 };
 
 export default socketHandler;

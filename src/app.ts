@@ -7,6 +7,7 @@ import { Socket } from "socket.io";
 import { router } from "./routes";
 import dbConnect from "./config/Mongo";
 import socketHandler from "./socket";
+import { RouteLogger } from "./services/Logger.Services";
 
 const socketPort = SOCKET_PORT ? parseInt(SOCKET_PORT) : 8002;
 
@@ -28,7 +29,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
-app.use(morgan("tiny"));
+app.use(
+	morgan((tokens, req, res) => {
+		RouteLogger(req.headers, req.body, req.originalUrl, req.route.methods);
+		return [
+			tokens.method(req, res),
+			tokens.url(req, res),
+			tokens.status(req, res),
+			tokens.res(req, res, "content-length"),
+			"-",
+			tokens["response-time"](req, res),
+			"ms",
+		].join(" ");
+	}),
+);
 app.use(router);
 dbConnect();
 

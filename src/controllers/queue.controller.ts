@@ -8,7 +8,6 @@ import {
 
 const createMessage = async (req: Request, res: Response) => {
 	try {
-		console.log("message queued");
 		await sendMessage(
 			`${req.headers.roomid}`,
 			req.body,

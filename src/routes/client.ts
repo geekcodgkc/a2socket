@@ -5,7 +5,7 @@ import {
 	deleteClient,
 	getClient,
 	getClients,
-	getClientMessages
+	getClientMessages,
 } from "../controllers/client.controller";
 import validateMiddleware from "../middlewares/validateMiddleware";
 
@@ -16,6 +16,6 @@ router.get("/", validateMiddleware, getClients);
 router.get("/:id", validateMiddleware, getClient);
 router.delete("/:id", validateMiddleware, deleteClient);
 router.put("/:id", validateMiddleware, updateClient);
-router.get('/messages', validateMiddleware, getClientMessages)
+router.get("/messages", validateMiddleware, getClientMessages);
 
 export { router };

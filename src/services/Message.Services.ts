@@ -54,7 +54,6 @@ const sendSalesServices = async (
 };
 
 const getMessagesService = async (req: Request) => {
-	console.log(req.params, req.headers);
 	if (!req.params.all) {
 		try {
 			const messages = await MessageModel.find({ roomId: req.headers.roomid });
