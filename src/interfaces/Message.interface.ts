@@ -5,4 +5,5 @@ export interface Message extends mongoose.Document {
 	createDate: Date;
 	roomId: string;
 	reads: string[];
+	toMain: boolean
 }

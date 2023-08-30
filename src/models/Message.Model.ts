@@ -20,6 +20,10 @@ const MessageSchema = new Schema<Message>(
 				type: String,
 			},
 		],
+		toMain: {
+			type: Boolean,
+			default: false
+		}
 	},
 	{
 		timestamps: true,
