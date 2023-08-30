@@ -55,6 +55,7 @@ const sendSalesServices = async (
 			message,
 			roomId,
 			reads: [],
+			toMain: true
 		});
 		io.to(roomId).emit("giveSales", sales.toJSON());
 	} catch (error) {
