@@ -60,4 +60,4 @@ const deleteMessageController = async (req: Request, res: Response) => {
 	}
 }
 
-export { createMessage, askForSales, sendSales, getMessages };
+export { createMessage, askForSales, sendSales, getMessages, deleteMessageController };

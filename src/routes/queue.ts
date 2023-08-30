@@ -4,6 +4,7 @@ import {
 	askForSales,
 	sendSales,
 	getMessages,
+	deleteMessageController
 } from "../controllers/queue.controller";
 import validateMiddleware from "../middlewares/validateMiddleware";
 import validateClientsMiddleware from "../middlewares/validateClientsMiddleware";
@@ -18,7 +19,7 @@ router.get(
 	validateClientsMiddleware,
 	askForSales,
 );
-router.delete("/:id", validateMiddleware)
+router.delete("/:id", validateMiddleware, deleteMessageController)
 
 router.post("/sales", validateMiddleware, validateClientsMiddleware, sendSales);
 
