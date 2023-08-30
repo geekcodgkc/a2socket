@@ -127,6 +127,7 @@ const addReadMessage = async (
 const deleteMessage = async (id: string) => {
 	try {
 		await MessageModel.findByIdAndRemove(id);
+		return `message with id: ${id} was removed`
 	} catch (error) {
 		console.log(error);
 	}

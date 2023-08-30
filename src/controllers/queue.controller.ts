@@ -54,7 +54,8 @@ const getMessages = async (req: Request, res: Response) => {
 const deleteMessageController = async (req: Request, res: Response) => {
 	try {
 		const id = req.params.id
-		await deleteMessage(id)
+		const response = await deleteMessage(id)
+		res.json({response})
 	} catch (error) {
 		res.json({ error })
 	}
