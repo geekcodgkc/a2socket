@@ -21,7 +21,7 @@ const createMessage = async (req: Request, res: Response) => {
 };
 
 const askForSales = async (req: Request, res: Response) => {
-	console.log(req.params, req.query);
+	
 	try {
 		await salesSevice({
 			roomId: `${req.headers.roomid}`,
