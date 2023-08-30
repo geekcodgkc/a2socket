@@ -4,6 +4,7 @@ import {
 	salesSevice,
 	sendSalesServices,
 	getMessagesService,
+	deleteMessage
 } from "../services/Message.Services";
 
 const createMessage = async (req: Request, res: Response) => {
@@ -49,5 +50,14 @@ const getMessages = async (req: Request, res: Response) => {
 		res.json({ error });
 	}
 };
+
+const deleteMessageController = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.id
+		await deleteMessage(id)
+	} catch (error) {
+		res.json({ error })
+	}
+}
 
 export { createMessage, askForSales, sendSales, getMessages };

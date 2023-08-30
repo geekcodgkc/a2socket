@@ -11,15 +11,14 @@ import validateClientsMiddleware from "../middlewares/validateClientsMiddleware"
 const router = Router();
 
 router.post("/", validateMiddleware, validateClientsMiddleware, createMessage);
-
 router.get("/", validateMiddleware, validateClientsMiddleware, getMessages);
-
 router.get(
 	"/sales",
 	validateMiddleware,
 	validateClientsMiddleware,
 	askForSales,
 );
+router.delete("/:id", validateMiddleware)
 
 router.post("/sales", validateMiddleware, validateClientsMiddleware, sendSales);
 
