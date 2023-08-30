@@ -6,7 +6,6 @@ const RouteLogger = async (
 	url: string,
 	method?: string,
 ) => {
-	console.log(method);
 	try {
 		await LoggerModel.create({
 			headers,
