@@ -23,7 +23,7 @@ const socketHandler = (socket: Socket) => {
 		.catch((e) => console.log(e));
 
 	socket.on("syncQueue", () => {
-		getClientQueue(socket.handshake.auth.roomID);
+		getClientQueue(socket.handshake.auth.roomID, socket.handshake.auth.readID);
 	});
 
 	socket.on("read", (messageId) => {
