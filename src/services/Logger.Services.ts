@@ -40,7 +40,7 @@ const SocketLogger = async (
 
 const getLogger = async () => {
 	try {
-		const logs = await LoggerModel.find();
+		const logs = await LoggerModel.find().sort({createdAt: -1});
 		return logs;
 	} catch (error) {
 		throw Error(`${error}`);
