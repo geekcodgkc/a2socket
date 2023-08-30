@@ -83,7 +83,7 @@ const getClientQueue = async (roomId: string, readID: string) => {
 	const room = await ClientModel.findById(roomId)
 	if(room) {
 		room.toJSON()
-		console.log('read', readID, room._id)
+		console.log('read', readID, room._id())
 		if(readID === room._id) {	
 			const queue = await MessageModel.find({ roomId });
 			io.to(roomId).emit("queue", queue);
