@@ -36,10 +36,10 @@ const askForSales = async (req: Request, res: Response) => {
 const sendSales = async (req: Request, res: Response) => {
 	try {
 		await sendSalesServices(`${req.headers.roomid}`, req.body);
+		res.json({ message: "ask for update sended" });
 	} catch (error) {
 		res.json({ error });
 	}
-	res.json({ message: "ask for update sended" });
 };
 
 const getMessages = async (req: Request, res: Response) => {
