@@ -6,6 +6,7 @@ import {
 	deleteMessage,
 	getClientQueue,
 } from "../services/Message.Services";
+import { SocketLogger } from "../services/Logger.Services";
 
 const socketHandler = (socket: Socket) => {
 	validate(socket);
@@ -22,11 +23,16 @@ const socketHandler = (socket: Socket) => {
 		})
 		.catch((e) => console.log(e));
 
-	socket.on("syncQueue", () => {
+	socket.on("syncQueue", async () => {
+		const syncQueue = 'syncQueue' 
+		await SocketLogger(socket.handshake.auth, {}, "syncQueue", {syncQueue})
 		getClientQueue(socket.handshake.auth.roomID, socket.handshake.auth.readID);
 	});
 
-	socket.on("read", (messageId) => {
+	socket.on("read", async (messageId) => {
+		const read = 'read'
+		await SocketLogger(socket.handshake.auth, {messageId}, read, {read})
+
 		addReadMessage(
 			socket.handshake.auth.roomID,
 			messageId,
@@ -34,11 +40,16 @@ const socketHandler = (socket: Socket) => {
 		);
 	});
 
-	socket.on("readSale", (messageId) => {
+	socket.on("readSale", async (messageId) => {
+		const readSale = 'readSale'
+		await SocketLogger(socket.handshake.auth, {messageId}, readSale, {readSale})
+
 		deleteMessage(messageId);
 	});
 
-	socket.on("disconnect", () => {
+	socket.on("disconnect", async () => {
+		const disconnect = 'disconnect'
+		await SocketLogger(socket.handshake.auth, {}, disconnect, {disconnect})
 		console.log(`dis ${socket.handshake.auth.readID}`);
 	});
 };
