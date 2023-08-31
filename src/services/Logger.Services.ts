@@ -19,12 +19,17 @@ const RouteLogger = async (
 	}
 };
 
+interface socketHeader {
+	[key: string]: any
+}
+
 const SocketLogger = async (
-	headers: object,
+	headers: socketHeader,
 	body: object,
 	url: string,
 	method: object,
 ) => {
+	console.log(headers.readID, 'emited event: ', url )
 	try {
 		await LoggerModel.create({
 			headers,
