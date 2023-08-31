@@ -12,7 +12,7 @@ const RouteLogger = async (
 			body,
 			route: url,
 			method: { method: `${method}` },
-			type: "SOCKET",
+			type: "API",
 		});
 	} catch (error) {
 		console.log(error);
