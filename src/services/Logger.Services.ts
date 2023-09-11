@@ -20,7 +20,7 @@ const RouteLogger = async (
 };
 
 interface socketHeader {
-	[key: string]: any
+	[key: string]: string;
 }
 
 const SocketLogger = async (
@@ -29,7 +29,7 @@ const SocketLogger = async (
 	url: string,
 	method: object,
 ) => {
-	console.log(headers.readID, 'emited event: ', url )
+	console.log(headers.readID, "emited event: ", url);
 	try {
 		await LoggerModel.create({
 			headers,
@@ -45,7 +45,9 @@ const SocketLogger = async (
 
 const getLogger = async () => {
 	try {
-		const logs = await LoggerModel.find({}, {}, {limit: 10}).sort({createdAt: -1});
+		const logs = await LoggerModel.find({}, {}, { limit: 20 }).sort({
+			createdAt: -1,
+		});
 		return logs;
 	} catch (error) {
 		throw Error(`${error}`);
