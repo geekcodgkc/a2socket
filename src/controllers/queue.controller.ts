@@ -4,7 +4,7 @@ import {
 	salesSevice,
 	sendSalesServices,
 	getMessagesService,
-	deleteMessage
+	deleteMessage,
 } from "../services/Message.Services";
 
 const createMessage = async (req: Request, res: Response) => {
@@ -12,7 +12,7 @@ const createMessage = async (req: Request, res: Response) => {
 		await sendMessage(
 			`${req.headers.roomid}`,
 			req.body,
-			`${req.headers.roomid}`,
+			`${req.headers.readid}`,
 		);
 	} catch (error) {
 		res.json({ error });
@@ -21,7 +21,6 @@ const createMessage = async (req: Request, res: Response) => {
 };
 
 const askForSales = async (req: Request, res: Response) => {
-	
 	try {
 		await salesSevice({
 			roomId: `${req.headers.roomid}`,
@@ -53,12 +52,18 @@ const getMessages = async (req: Request, res: Response) => {
 
 const deleteMessageController = async (req: Request, res: Response) => {
 	try {
-		const id = req.params.id
-		const response = await deleteMessage(id)
-		res.json({response})
+		const id = req.params.id;
+		const response = await deleteMessage(id);
+		res.json({ response });
 	} catch (error) {
-		res.json({ error })
+		res.json({ error });
 	}
-}
+};
 
-export { createMessage, askForSales, sendSales, getMessages, deleteMessageController };
+export {
+	createMessage,
+	askForSales,
+	sendSales,
+	getMessages,
+	deleteMessageController,
+};
