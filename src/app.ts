@@ -5,9 +5,7 @@ import { Server } from "socket.io";
 import { SOCKET_PORT, PORT } from "./config";
 import { Socket } from "socket.io";
 import { router } from "./routes";
-import dbConnect from "./config/Mongo";
 import socketHandler from "./socket";
-import { RouteLogger } from "./services/Logger.Services";
 
 const socketPort = SOCKET_PORT ? parseInt(SOCKET_PORT) : 8002;
 
@@ -31,12 +29,6 @@ app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use(
 	morgan((tokens, req, res) => {
-		RouteLogger(
-			req.headers,
-			req.body,
-			req.originalUrl,
-			tokens.method(req, res),
-		);
 		return [
 			tokens.method(req, res),
 			tokens.url(req, res),
@@ -49,7 +41,6 @@ app.use(
 	}),
 );
 app.use(router);
-dbConnect();
 
 console.log("socket running on port ", SOCKET_PORT);
 app.listen(port, () => {

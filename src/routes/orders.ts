@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { createMessage } from "../controllers/queue.controller";
 import validateMiddleware from "../middlewares/validateMiddleware";
-import { getLogs } from "../controllers/logger.controllers";
 
 const router = Router();
 
-router.get("/all", validateMiddleware, getLogs);
+router.post("/", validateMiddleware, createMessage);
 
 export { router };
