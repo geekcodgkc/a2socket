@@ -11,4 +11,15 @@ const sendMessage = async (
 	io.to(`${roomId}`).emit("newOrder", message);
 };
 
-export { sendMessage };
+const sendDraft = async (roomId: string) => {
+	io.to(`${roomId}`).emit("draft", { "001": "qty:1" });
+};
+
+const updateDraft = async (
+	roomId: string,
+	data: string | object | Array<string | object>,
+) => {
+	io.to(`${roomId}`).emit("draft", data);
+};
+
+export { sendMessage, sendDraft, updateDraft };

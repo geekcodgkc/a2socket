@@ -6,6 +6,7 @@ import { SOCKET_PORT, PORT } from "./config";
 import { Socket } from "socket.io";
 import { router } from "./routes";
 import socketHandler from "./socket";
+import { client } from "./store/redis";
 
 const socketPort = SOCKET_PORT ? parseInt(SOCKET_PORT) : 8002;
 
@@ -16,6 +17,8 @@ const io = new Server(socketPort, {
 		credentials: true,
 	},
 });
+
+//client;
 
 io.on("connection", (socket: Socket) => {
 	socketHandler(socket);

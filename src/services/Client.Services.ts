@@ -1,13 +1,4 @@
-import axios from "axios";
-
-const GetClient = async (id: string) => {
-	try {
-		const client = await axios.get("https://localhost:3001/clients");
-		return client;
-	} catch (error) {
-		throw new Error(`${error}`);
-	}
-};
+import api from "../api";
 
 interface validationData {
 	roomdId: string;
@@ -23,4 +14,4 @@ const ValidateClient = async ({ roomdId, readId }: validationData) => {
 		throw new Error(`${error}`);
 	}
 };
-export { GetClient, ValidateClient };
+export { ValidateClient };

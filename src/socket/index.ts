@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import validate from "../utils/validateToken";
 import { ValidateClient } from "../services/Client.Services";
-import {} from "../services/Message.Services";
+import { sendDraft, updateDraft } from "../services/Message.Services";
 
 const socketHandler = (socket: Socket) => {
 	validate(socket);
@@ -17,6 +17,14 @@ const socketHandler = (socket: Socket) => {
 			socket.disconnect();
 		})
 		.catch((e) => console.log(e));
+
+	socket.on("getDraft", () => {
+		sendDraft(socket.handshake.auth.roomID);
+	});
+
+	socket.on("updateDraft", ({ ...rest }) => {
+		updateDraft(socket.handshake.auth.roomID, rest);
+	});
 
 	socket.on("disconnect", async () => {
 		console.log(`dis ${socket.handshake.auth.readID}`);
