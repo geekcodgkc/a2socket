@@ -16,7 +16,9 @@ const socketHandler = (socket: Socket) => {
 			}
 			socket.disconnect();
 		})
-		.catch((e) => console.log(e));
+		.catch((e) => {
+			console.log(e);
+		});
 
 	socket.on("getDraft", () => {
 		sendDraft(socket.handshake.auth.roomID);

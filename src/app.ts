@@ -18,7 +18,12 @@ const io = new Server(socketPort, {
 	},
 });
 
-//client;
+client
+	.connect()
+	.then(async () => {
+		console.log("redis conected");
+	})
+	.catch((err) => console.log(err));
 
 io.on("connection", (socket: Socket) => {
 	socketHandler(socket);
