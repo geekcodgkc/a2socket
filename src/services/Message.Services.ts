@@ -9,6 +9,7 @@ const sendMessage = async (
 	roomId: string,
 	message: string | object | Array<string | object>,
 ) => {
+	console.log("message sended");
 	io.to(`${roomId}`).emit("newOrder", message);
 };
 

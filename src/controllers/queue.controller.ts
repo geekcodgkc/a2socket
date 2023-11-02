@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { sendMessage } from "../services/Message.Services";
 
 const createMessage = async (req: Request, res: Response) => {
+	console.log("controller passed");
 	try {
 		await sendMessage(`${req.headers.roomid}`, req.body);
 	} catch (error) {

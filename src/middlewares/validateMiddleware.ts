@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { TOKEN } from "../config";
 
 const validateMiddleware = (req: Request, res: Response, next: Function) => {
+	console.log("middleware: ", req.headers);
+
 	const token = req.headers.authorization?.split(" ")[1];
 	if (token) {
 		if (token === TOKEN) {
